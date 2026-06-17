@@ -11,10 +11,19 @@ namespace IndicateurVerrouTouche.Services;
 /// </summary>
 public static class InstallationLocale
 {
-    /// <summary>Emplacement local d'installation de l'exécutable.</summary>
-    public static string CheminLocal => Path.Combine(
+    /// <summary>Dossier d'installation locale de l'application.</summary>
+    public static string DossierLocal => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "IndicateurVerrouTouche", "IndicateurVerrouTouche.exe");
+        "IndicateurVerrouTouche");
+
+    /// <summary>Emplacement local d'installation de l'exécutable.</summary>
+    public static string CheminLocal => Path.Combine(DossierLocal, "IndicateurVerrouTouche.exe");
+
+    /// <summary>
+    /// Fichier mémorisant le dossier réseau d'origine (d'où l'exe a été distribué et lancé) ;
+    /// écrit lors de l'auto-installation locale et conservé à travers les mises à jour.
+    /// </summary>
+    private static string CheminSourceMaj => Path.Combine(DossierLocal, "source-maj.txt");
 
     /// <summary>
     /// Si l'exe tourne depuis un emplacement réseau, le copie en local et relance la copie.
@@ -28,6 +37,9 @@ public static class InstallationLocale
         {
             var dest = CheminLocal;
             Directory.CreateDirectory(Path.GetDirectoryName(dest)!);
+            // Mémorise le dossier réseau d'origine : la copie locale saura y chercher les mises à
+            // jour (le partage de distribution contient l'exe ET le manifeste maj.json).
+            try { File.WriteAllText(CheminSourceMaj, Path.GetDirectoryName(exe)!); } catch { /* best-effort */ }
             // Copie best-effort : si la copie locale est déjà ouverte (instance installée en cours),
             // on ne l'écrase pas et on se contente de la lancer.
             try { File.Copy(exe, dest, overwrite: true); }
@@ -36,6 +48,27 @@ public static class InstallationLocale
             return true;
         }
         catch { return false; }   // échec : on laisse l'app tourner depuis le réseau (mode dégradé)
+    }
+
+    /// <summary>
+    /// Dossier où chercher les mises à jour par défaut (aucun chemin configuré explicitement),
+    /// pour que l'auto-MAJ fonctionne quel que soit l'endroit d'extraction / de lancement :
+    /// le dossier réseau d'origine mémorisé lors de l'auto-installation, sinon le dossier de
+    /// l'exécutable en cours (cas d'un dossier extrait et lancé sur place). Null si indéterminable.
+    /// </summary>
+    public static string? DossierMajParDefaut()
+    {
+        try
+        {
+            if (File.Exists(CheminSourceMaj))
+            {
+                var src = File.ReadAllText(CheminSourceMaj).Trim();
+                if (!string.IsNullOrWhiteSpace(src)) return src;
+            }
+        }
+        catch { /* sidecar illisible : on retombe sur le dossier de l'exe */ }
+        var exe = Environment.ProcessPath;
+        return string.IsNullOrEmpty(exe) ? null : Path.GetDirectoryName(exe);
     }
 
     /// <summary>Vrai si le chemin est sur un partage UNC ou un lecteur réseau mappé.</summary>

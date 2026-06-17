@@ -75,6 +75,16 @@ public partial class SettingsWindow : Window
         ligneMaj.Children.Add(cheminMaj);
         ligneMaj.Children.Add(btnParcourir);
         sp.Children.Add(ligneMaj);
+        var defautMaj = InstallationLocale.DossierMajParDefaut();
+        sp.Children.Add(new TextBlock
+        {
+            Text = string.IsNullOrWhiteSpace(defautMaj)
+                ? "Laissez vide pour détecter automatiquement le dossier de distribution."
+                : $"Laissez vide pour détecter automatiquement : {defautMaj}",
+            Foreground = System.Windows.Media.Brushes.Gray,
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 2, 0, 0)
+        });
         var chkMaj = new CheckBox { Content = "Vérifier les mises à jour au démarrage", IsChecked = _travail.General.VerifierMajAuDemarrage, Margin = new Thickness(0, 6, 0, 0) };
         chkMaj.Checked += (_, _) => _travail.General.VerifierMajAuDemarrage = true;
         chkMaj.Unchecked += (_, _) => _travail.General.VerifierMajAuDemarrage = false;
@@ -96,6 +106,7 @@ public partial class SettingsWindow : Window
     /// <summary>Vérifie manuellement le partage et propose l'installation si une version plus récente existe.</summary>
     private void VerifierMajManuel(string chemin)
     {
+        if (string.IsNullOrWhiteSpace(chemin)) chemin = InstallationLocale.DossierMajParDefaut() ?? "";
         var info = MiseAJour.Verifier(chemin);
         if (info is null) { MessageBox.Show("Aucune mise à jour trouvée (dossier vide, injoignable ou non configuré)."); return; }
         if (!MiseAJour.EstPlusRecente(info)) { MessageBox.Show($"Vous avez déjà la dernière version ({MiseAJour.VersionActuelle})."); return; }

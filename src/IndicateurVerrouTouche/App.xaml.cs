@@ -133,12 +133,23 @@ public partial class App : Application
     }
 
     /// <summary>
+    /// Dossier où chercher les mises à jour : le chemin configuré s'il est renseigné, sinon le
+    /// dossier d'origine détecté automatiquement (partage réseau de distribution ou dossier
+    /// d'extraction de l'exe), pour que l'auto-MAJ fonctionne quel que soit l'emplacement de lancement.
+    /// </summary>
+    private string? CheminMajEffectif()
+    {
+        var c = _config.Current.General.CheminMaJ;
+        return string.IsNullOrWhiteSpace(c) ? InstallationLocale.DossierMajParDefaut() : c;
+    }
+
+    /// <summary>
     /// Vérifie en arrière-plan la présence d'une mise à jour. Si le manifeste la marque « forcer »,
     /// elle est installée immédiatement et sans confirmation ; sinon elle est proposée via une bulle.
     /// </summary>
     private void VerifierMaj()
     {
-        var chemin = _config.Current.General.CheminMaJ;
+        var chemin = CheminMajEffectif();
         if (string.IsNullOrWhiteSpace(chemin) || _majEnCours) return;
         new Thread(() =>
         {
@@ -161,16 +172,19 @@ public partial class App : Application
     private void InstallerMajForcee(InfoMaJ info)
     {
         if (_majEnCours) return;
+        var chemin = CheminMajEffectif();
+        if (string.IsNullOrWhiteSpace(chemin)) return;
         _majEnCours = true;
         _tray?.AfficherNotification("Mise à jour", $"Installation automatique de la version {info.Version}…", null);
-        try { MiseAJour.Installer(info, _config.Current.General.CheminMaJ, () => Shutdown()); }
+        try { MiseAJour.Installer(info, chemin, () => Shutdown()); }
         catch { _majEnCours = false; }   // échec : nouvelle tentative au prochain cycle de vérification
     }
 
     /// <summary>Confirme puis installe la mise à jour (l'app se ferme, l'exe est remplacé puis relancé).</summary>
     private void LancerMaj(InfoMaJ info)
     {
-        var chemin = _config.Current.General.CheminMaJ;
+        var chemin = CheminMajEffectif();
+        if (string.IsNullOrWhiteSpace(chemin)) return;
         var notes = string.IsNullOrWhiteSpace(info.Notes) ? "" : $"\n\n{info.Notes}";
         if (MessageBox.Show($"Installer la version {info.Version} ?{notes}", "Mise à jour",
                 MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;

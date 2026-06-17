@@ -54,9 +54,12 @@ installé (à déployer une fois par poste, p. ex. via GPO/Intune).
 Avant de publier, exécuter `./build/bump-version.ps1` : il calcule et écrit la version suivante
 dans le `.csproj` (champ `InformationalVersion`).
 
-**Mises à jour automatiques** — l'application lit un manifeste `maj.json` dans un dossier réseau
-(UNC) **paramétrable** (réglages → Général ; défaut
-`\\SERVEUR\Partage\IndicateurVerrouTouche`, à adapter à votre partage). Pour publier une mise à jour :
+**Mises à jour automatiques** — l'application lit un manifeste `maj.json` dans un **dossier de mises
+à jour détecté automatiquement** : le dossier réseau d'où l'exe a été distribué et lancé (mémorisé
+lors de l'auto-installation locale), ou à défaut le dossier d'où l'exe est exécuté. Les mises à jour
+fonctionnent donc **quel que soit l'emplacement d'où l'application a été lancée** (partage réseau
+d'entreprise, dossier local extrait…). Ce dossier reste **paramétrable** (réglages → Général) pour
+forcer une autre source. Pour publier une mise à jour :
 
 1. `./build/bump-version.ps1` puis `./build/publish.ps1`.
 2. Copier `dist/IndicateurVerrouTouche.exe` dans le dossier réseau.

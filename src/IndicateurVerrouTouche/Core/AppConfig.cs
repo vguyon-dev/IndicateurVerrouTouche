@@ -35,9 +35,10 @@ public sealed class GeneralConfig
     public string ModeDetection { get; set; } = "hook";  // "hook" | "polling"
     public int IntervallePollingMs { get; set; } = 30;
     public int IntervalleReconciliationMs { get; set; } = 500;
-    // Dossier UNC des mises à jour (paramétrable depuis les réglages). Vide = désactivé.
-    // Exemple à adapter à votre partage réseau lors du déploiement.
-    public string CheminMaJ { get; set; } = @"\\SERVEUR\Partage\IndicateurVerrouTouche";
+    // Dossier des mises à jour (paramétrable depuis les réglages).
+    // Vide = détecté automatiquement : dossier réseau d'origine d'où l'exe a été distribué et lancé,
+    // sinon dossier d'extraction de l'exe (voir InstallationLocale.DossierMajParDefaut).
+    public string CheminMaJ { get; set; } = "";
     public bool VerifierMajAuDemarrage { get; set; } = true;
     public int IntervalleVerifMajMinutes { get; set; } = 30;   // re-vérif périodique (0 = seulement au démarrage)
     public bool EpinglerSystray { get; set; } = true;   // épingle les icônes dans la zone de notification (Windows 11)
