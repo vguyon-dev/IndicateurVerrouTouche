@@ -1,0 +1,26 @@
+<UserControl x:Class="IndicateurVerrouTouche.UI.Controls.TraySettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="clr-namespace:IndicateurVerrouTouche.UI">
+    <UserControl.Resources><ui:HexColorToBrushConverter x:Key="Hex"/></UserControl.Resources>
+    <StackPanel Margin="8">
+        <CheckBox Content="Afficher une icône dans la zone de notification" IsChecked="{Binding Actif}" Margin="0,0,0,8"/>
+        <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+            <TextBlock Text="Lettre" Grid.Row="0"/><TextBox Text="{Binding Lettre}" Grid.Row="0" Grid.Column="1" MaxLength="2"/>
+            <TextBlock Text="Couleur (ON)" Grid.Row="1"/>
+            <DockPanel Grid.Row="1" Grid.Column="1">
+                <Border Width="24" DockPanel.Dock="Right" BorderBrush="#888" BorderThickness="1" Background="{Binding CouleurOn, Converter={StaticResource Hex}}"/>
+                <Button Content="…" DockPanel.Dock="Right" Width="28" Tag="CouleurOn" Click="ChoisirCouleur"/>
+                <TextBox Text="{Binding CouleurOn}"/>
+            </DockPanel>
+            <TextBlock Text="Couleur (OFF)" Grid.Row="2"/>
+            <DockPanel Grid.Row="2" Grid.Column="1">
+                <Border Width="24" DockPanel.Dock="Right" BorderBrush="#888" BorderThickness="1" Background="{Binding CouleurOff, Converter={StaticResource Hex}}"/>
+                <Button Content="…" DockPanel.Dock="Right" Width="28" Tag="CouleurOff" Click="ChoisirCouleur"/>
+                <TextBox Text="{Binding CouleurOff}"/>
+            </DockPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>

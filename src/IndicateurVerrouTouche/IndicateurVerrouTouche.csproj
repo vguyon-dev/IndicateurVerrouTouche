@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName>IndicateurVerrouTouche</AssemblyName>
+    <RootNamespace>IndicateurVerrouTouche</RootNamespace>
+    <!-- WFAC010 : l'analyseur WinForms réclame la config DPI via API. Ici l'appli est WPF-first et
+         déclare volontairement Per-Monitor v2 dans app.manifest (positionnement OSD multi-écran). -->
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+    <!-- Identité du logiciel (affichée dans les réglages et les propriétés de l'exe). -->
+    <!-- Version applicative au format Année.Mois.Jour + lettre (incrémentée par build/bump-version.ps1).
+         InformationalVersion porte la vraie version (chaîne) ; Version reste numérique pour l'assembly. -->
+    <InformationalVersion>2026.06.11a</InformationalVersion>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Version>2026.6.11</Version>
+    <Product>Indicateur Verrou Touche</Product>
+    <Authors>GUYON Valentin</Authors>
+    <Company>GUYON Valentin</Company>
+    <Copyright>© GUYON Valentin</Copyright>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- L'appli est WPF-first. UseWindowsForms+ImplicitUsings ajoute des usings globaux
+         System.Drawing / System.Windows.Forms qui rendent ambigus les types WPF homonymes
+         (FontFamily, Color, Button, TextBox…). On les retire : les rares fichiers GDI/WinForms
+         (TrayService, PositionneurEcran) importent ces espaces de noms explicitement. -->
+    <Using Remove="System.Drawing" />
+    <Using Remove="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\**\*"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></None>
+  </ItemGroup>
+</Project>

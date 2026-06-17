@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "general": {
+    "langue": "fr",
+    "demarrerAvecWindows": false,
+    "modeDetection": "hook",
+    "intervallePollingMs": 30,
+    "intervalleReconciliationMs": 500
+  },
+  "touches": [
+    {
+      "id": "capsLock",
+      "vk": 20,
+      "libelle": "Verr. Maj",
+      "activee": true,
+      "osd": {
+        "texteOn": "MAJUSCULES ACTIVÉES",
+        "texteOff": "Majuscules désactivées",
+        "dureeMs": 1500,
+        "fonduEntreeMs": 150,
+        "fonduSortieMs": 300,
+        "actif": true,
+        "police": "Segoe UI",
+        "tailleTexte": 22,
+        "couleurTexteOn": "#FFFFFF",
+        "couleurTexteOff": "#DDDDDD",
+        "couleurFondOn": "#C0392B",
+        "couleurFondOff": "#34495E",
+        "opacite": 0.9,
+        "coinsArrondis": 12,
+        "ancrage": "basCentre",
+        "decalageX": 0,
+        "decalageY": 80,
+        "ecranCible": "actif"
+      },
+      "badge": {
+        "afficherSi": "on",
+        "texteOn": "⇪",
+        "texteOff": "",
+        "actif": false,
+        "police": "Segoe UI",
+        "tailleTexte": 22,
+        "couleurTexteOn": "#FFFFFF",
+        "couleurTexteOff": "#DDDDDD",
+        "couleurFondOn": "#C0392B",
+        "couleurFondOff": "#34495E",
+        "opacite": 0.9,
+        "coinsArrondis": 12,
+        "ancrage": "basDroite",
+        "decalageX": 16,
+        "decalageY": 16,
+        "ecranCible": "principal"
+      },
+      "tray": {
+        "actif": true,
+        "lettre": "A",
+        "couleurOn": "#C0392B",
+        "couleurOff": "#7F8C8D"
+      },
+      "son": {
+        "actif": false,
+        "sonOn": "",
+        "sonOff": "",
+        "volume": 0.8
+      }
+    },
+    {
+      "id": "numLock",
+      "vk": 144,
+      "libelle": "Verr. Num",
+      "activee": true,
+      "osd": {
+        "texteOn": "PAVÉ NUM. ACTIVÉ",
+        "texteOff": "Pavé num. désactivé",
+        "dureeMs": 1500,
+        "fonduEntreeMs": 150,
+        "fonduSortieMs": 300,
+        "actif": true,
+        "police": "Segoe UI",
+        "tailleTexte": 22,
+        "couleurTexteOn": "#FFFFFF",
+        "couleurTexteOff": "#DDDDDD",
+        "couleurFondOn": "#27AE60",
+        "couleurFondOff": "#34495E",
+        "opacite": 0.9,
+        "coinsArrondis": 12,
+        "ancrage": "basCentre",
+        "decalageX": 0,
+        "decalageY": 80,
+        "ecranCible": "actif"
+      },
+      "badge": {
+        "afficherSi": "on",
+        "texteOn": "⇩",
+        "texteOff": "",
+        "actif": false,
+        "police": "Segoe UI",
+        "tailleTexte": 22,
+        "couleurTexteOn": "#FFFFFF",
+        "couleurTexteOff": "#DDDDDD",
+        "couleurFondOn": "#27AE60",
+        "couleurFondOff": "#34495E",
+        "opacite": 0.9,
+        "coinsArrondis": 12,
+        "ancrage": "basDroite",
+        "decalageX": 16,
+        "decalageY": 56,
+        "ecranCible": "principal"
+      },
+      "tray": {
+        "actif": true,
+        "lettre": "N",
+        "couleurOn": "#27AE60",
+        "couleurOff": "#7F8C8D"
+      },
+      "son": {
+        "actif": false,
+        "sonOn": "",
+        "sonOff": "",
+        "volume": 0.8
+      }
+    }
+  ]
+}

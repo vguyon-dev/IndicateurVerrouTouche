@@ -1,0 +1,20 @@
+# ---- Sortie de build .NET ----
+[Bb]in/
+[Oo]bj/
+dist/
+
+# ---- Visual Studio / Rider ----
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ---- Claude Code (réglages locaux, non partagés) ----
+.claude/settings.local.json
+
+# ---- Divers ----
+*.log
+Thumbs.db
+desktop.ini
