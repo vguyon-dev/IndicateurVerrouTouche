@@ -1,5 +1,10 @@
 # Indicateur Verrou Touche
 
+[![Licence](https://img.shields.io/badge/licence-Propri%C3%A9taire-red)](LICENSE)
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)
+![Plateforme](https://img.shields.io/badge/plateforme-Windows-0078D6?logo=windows&logoColor=white)
+![Dépendances](https://img.shields.io/badge/d%C3%A9pendances-aucune-brightgreen)
+
 Utilitaire Windows (zone de notification) qui surveille **Verr. Maj** et **Verr. Num** et
 signale leurs changements d'état via 4 modes, chacun **entièrement paramétrable par touche** :
 
